@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ofxAnimationPrimitivesUtils.h"
+#include "ofxAnimationPrimitivesConstants.h"
 
-BEGIN_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 struct Back
 {
@@ -238,4 +238,4 @@ struct Sine
 	}
 };
 
-END_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

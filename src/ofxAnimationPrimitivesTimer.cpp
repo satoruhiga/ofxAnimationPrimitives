@@ -1,6 +1,6 @@
-#include "Timer.h"
+#include "ofxAnimationPrimitivesTimer.h"
 
-BEGIN_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 Clock* Clock::system_clock = NULL;
 
@@ -34,4 +34,4 @@ void Timer::stop()
 	Clock::unregist(this);
 }
 
-END_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

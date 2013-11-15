@@ -2,15 +2,14 @@
 
 #include "ofMain.h"
 
-#include "ofxAnimationPrimitivesUtils.h"
+#include "ofxAnimationPrimitivesConstants.h"
 
-#include "Timer.h"
-#include "VectorHelper.h"
+#include "ofxAnimationPrimitivesTimer.h"
 
 // based SuperCollider sequence mechanism
 // see. http://doc.sccode.org/Tutorials/Getting-Started/16-Sequencing-with-Patterns.html
 
-BEGIN_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 class Pattern
 {
@@ -394,4 +393,4 @@ typedef While Pwhile;
 typedef Step Pstep;
 typedef Bind Pbind;
 
-END_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

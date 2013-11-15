@@ -2,9 +2,9 @@
 
 #include "ofMain.h"
 
-#include "ofxAnimationPrimitivesUtils.h"
+#include "ofxAnimationPrimitivesConstants.h"
 
-BEGIN_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 struct Timer
 {
@@ -75,4 +75,4 @@ protected:
 	float bpm;
 };
 
-END_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Timer.h"
-#include "Pattern.h"
-#include "Replicator.h"
-#include "Generator.h"
-#include "Easing.h"
-
-#include "VectorHelper.h"
+#include "ofxAnimationPrimitivesConstants.h"
+#include "ofxAnimationPrimitivesTimer.h"
+#include "ofxAnimationPrimitivesPattern.h"
+#include "ofxAnimationPrimitivesReplicator.h"
+#include "ofxAnimationPrimitivesGenerator.h"
+#include "ofxAnimationPrimitivesEasing.h"
+#include "ofxAnimationPrimitivesInstanceManager.h"

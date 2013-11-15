@@ -2,9 +2,9 @@
 
 #include "ofMain.h"
 
-#include "ofxAnimationPrimitivesUtils.h"
+#include "ofxAnimationPrimitivesConstants.h"
 
-BEGIN_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 template <typename ParamType>
 struct Replicator_
@@ -231,4 +231,4 @@ struct Replicator_<T>::Grid3D : public Operator
 	}
 };
 
-END_OFX_ANIMATION_PRIMITIVES_NAMESPACE
+OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
