@@ -10,17 +10,14 @@ class Instance
 	
 public:
 	
+	virtual ~Instance() {}
+	
 	virtual void update() {}
 	virtual void draw() {}
 	
 	void play(float duration)
 	{
 		this->duration = remain = duration;
-	}
-	
-	void kill()
-	{
-		remain = 0;
 	}
 	
 public:
@@ -42,6 +39,8 @@ protected:
 	// cache
 	float life;
 	float one_minus_life;
+	
+	virtual void willDelete() {}
 
 };
 
@@ -67,6 +66,7 @@ public:
 			if (!o->isAlive())
 			{
 				it = instances.erase(it);
+				o->willDelete();
 				delete o;
 			}
 			else
@@ -110,6 +110,7 @@ public:
 			if (o->class_id == Type2Int<T>::value())
 			{
 				it = instances.erase(it);
+				o->willDelete();
 				delete o;
 			}
 			else
@@ -123,6 +124,7 @@ public:
 		while (it != instances.end())
 		{
 			Instance *o = *it;
+			o->willDelete();
 			delete o;
 			it++;
 		}
