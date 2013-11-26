@@ -111,7 +111,7 @@ public:
 	
 protected:
 	
-	float value, target;
+	T value, target;
 	float speed;
 	
 	void tick(float time_diff)
