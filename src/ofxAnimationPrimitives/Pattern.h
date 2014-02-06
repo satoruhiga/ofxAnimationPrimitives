@@ -115,7 +115,7 @@ protected:
 
 // time
 
-class TimePattern : public Pattern, public Timer
+class TimePattern : public Pattern, public Ticker
 {
 public:
 	
@@ -135,14 +135,14 @@ public:
 	void play()
 	{
 		playing = true;
-		Timer::play();
+		Ticker::play();
 	}
 	
 	void pause() { playing = false; }
 	
 	void stop()
 	{
-		Timer::stop();
+		Ticker::stop();
 		remain = 0;
 		playing = false;
 	}
@@ -186,7 +186,7 @@ protected:
 		dur_pattern = dur;
 	}
 	
-	void tick(float time_diff)
+	void tick(float delta)
 	{
 		// must set value_pattern & dur_pattern
 		assert(value_pattern);
@@ -212,7 +212,7 @@ protected:
 			this->event();
 		}
 		
-		remain -= time_diff;
+		remain -= delta;
 	}
 
 private:

@@ -6,24 +6,73 @@
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
-struct Timer
+struct Ticker
 {
-	virtual ~Timer() { stop(); }
-	virtual void tick(float time_diff) {}
+	virtual ~Ticker() { stop(); }
+	virtual void tick(float delta) {}
 	
 	void play();
 	void stop();
 };
 
+class Timer : protected Ticker
+{
+public:
+	
+	ofEvent<ofEventArgs> timerEvent;
+	
+	Timer() : remain(0), duration(0), repeat(false) {}
+	
+	void start(float duration, bool repeat = true)
+	{
+		this->duration = duration;
+		this->remain = duration;
+		this->repeat = repeat;
+		
+		Ticker::play();
+	}
+	
+	void stop()
+	{
+		Ticker::stop();
+	}
+	
+protected:
+	
+	float remain, duration;
+	bool repeat;
+	
+	void tick(float delta)
+	{
+		remain -= delta;
+		
+		if (remain > 0) return;
+		
+		static ofEventArgs args;
+		ofNotifyEvent(timerEvent, args, this);
+		
+		if (repeat)
+		{
+			remain += duration;
+		}
+		else
+		{
+			stop();
+		}
+	}
+};
+
+#pragma mark -
+
 class Clock
 {
 public:
 	
-	virtual float get() const { return ofGetLastFrameTime(); }
+	virtual float getTime() const { return ofGetLastFrameTime(); }
 	
 	void update()
 	{
-		float dt = get();
+		float dt = getTime();
 		for (int i = 0; i < time_related().size(); i++)
 			time_related()[i]->tick(dt);
 	}
@@ -34,24 +83,24 @@ public:
 	
 	static Clock* getClock() { return system_clock; }
 	
-	static void regist(Timer *o)
+	static void regist(Ticker *o)
 	{
 		if (find(time_related().begin(), time_related().end(), o) != time_related().end()) return;
 		time_related().push_back(o);
 	}
 	
-	static void unregist(Timer *o)
+	static void unregist(Ticker *o)
 	{
-		vector<Timer*>::iterator it = remove(time_related().begin(), time_related().end(), o);
+		vector<Ticker*>::iterator it = remove(time_related().begin(), time_related().end(), o);
 		time_related().erase(it, time_related().end());
 	}
 	
 protected:
 	
 	static Clock *system_clock;
-	static vector<Timer*>& time_related()
+	static vector<Ticker*>& time_related()
 	{
-		static vector<Timer*> *p = new vector<Timer*>;
+		static vector<Ticker*> *p = new vector<Ticker*>;
 		return *p;
 	}
 };
@@ -65,7 +114,7 @@ public:
 	void setBpm(float v) { bpm = v; }
 	float getBpm() const { return bpm; }
 	
-	float get() const
+	float getTime() const
 	{
 		return ofGetLastFrameTime() * (bpm / 60);
 	}
@@ -73,51 +122,6 @@ public:
 protected:
 	
 	float bpm;
-};
-
-//
-
-template <typename T>
-class Lerp : public Timer
-{
-public:
-	
-	Lerp() : value(0), target(0), speed(0.05) { play(); }
-	Lerp(const T& v) : value(v), target(v), speed(0.05) { play(); }
-	~Lerp() { stop(); }
-	Lerp(const Lerp& copy) { *this = copy; play(); }
-	
-	Lerp<T>& operator=(const Lerp<T>& copy)
-	{
-		value = copy.value;
-		target = copy.target;
-		speed = copy.speed;
-		return *this;
-	}
-	
-	inline Lerp<T>& operator=(const T& v) { target = v; }
-	inline operator const T&() const { return value; }
-	
-	inline void setValue(const T& v) { target = v; }
-	inline const T& getValue() const { return value; }
-
-	inline void setSpeed(float v) { speed = ofClamp(v, 0, 1); }
-	inline float getSpeed() const { return speed; }
-	
-	inline Lerp<T>& operator+=(const T& v) { target += v; return *this; }
-	inline Lerp<T>& operator-=(const T& v) { target -= v; return *this; }
-	inline Lerp<T>& operator*=(const T& v) { target *= v; return *this; }
-	inline Lerp<T>& operator/=(const T& v) { target /= v; return *this; }
-	
-protected:
-	
-	T value, target;
-	float speed;
-	
-	void tick(float time_diff)
-	{
-		value += (target - value) * speed;
-	}
 };
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

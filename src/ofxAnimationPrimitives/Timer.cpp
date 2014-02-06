@@ -4,14 +4,14 @@ OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 Clock* Clock::system_clock = NULL;
 
-struct Ticker
+struct DefaultClock
 {
 	Clock clock;
 	
-	Ticker()
+	DefaultClock()
 	{
 		clock.makeSystemClock();
-		ofAddListener(ofEvents().update, this, &Ticker::onUpdate);
+		ofAddListener(ofEvents().update, this, &DefaultClock::onUpdate);
 	}
 	
 	void onUpdate(ofEventArgs &e)
@@ -20,16 +20,14 @@ struct Ticker
 	}
 };
 
-static Ticker ticker;
+static DefaultClock default_clock;
 
-// Timer
-
-void Timer::play()
+void Ticker::play()
 {
 	Clock::regist(this);
 }
 
-void Timer::stop()
+void Ticker::stop()
 {
 	Clock::unregist(this);
 }

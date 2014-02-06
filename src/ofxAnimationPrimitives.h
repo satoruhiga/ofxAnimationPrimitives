@@ -7,3 +7,4 @@
 #include "ofxAnimationPrimitives/Generator.h"
 #include "ofxAnimationPrimitives/Easing.h"
 #include "ofxAnimationPrimitives/InstanceManager.h"
+#include "ofxAnimationPrimitives/Lerp.h"
