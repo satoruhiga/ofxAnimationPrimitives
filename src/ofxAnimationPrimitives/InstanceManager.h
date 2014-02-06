@@ -43,6 +43,12 @@ public:
 	
 	inline float getDuration() const { return duration; }
 	
+	inline bool isInfinity() const { return std::isinf(duration); }
+	
+protected:
+	
+	virtual void willDelete() {}
+
 private:
 	
 	unsigned int class_id;
@@ -83,6 +89,7 @@ public:
 			if (!o->isAlive())
 			{
 				it = instances.erase(it);
+				o->willDelete();
 				delete o;
 			}
 			else
@@ -92,6 +99,8 @@ public:
 	
 	void draw()
 	{
+		glPushAttrib(GL_ALL_ATTRIB_BITS);
+		ofPushMatrix();
 		ofPushStyle();
 		
 		vector<Instance*>::iterator it = instances.begin();
@@ -103,6 +112,8 @@ public:
 		}
 		
 		ofPopStyle();
+		ofPopMatrix();
+		glPopAttrib();
 	}
 	
 public:
@@ -250,13 +261,29 @@ public:
 			if (o->class_id == Type2Int<T>::value())
 			{
 				it = instances.erase(it);
+				o->willDelete();
 				delete o;
 			}
 			else
 				it++;
 		}
 	}
-	
+
+	template <typename T>
+	void release(float duration)
+	{
+		vector<Instance*>::iterator it = instances.begin();
+		while (it != instances.end())
+		{
+			Instance *o = *it;
+			if (o->class_id == Type2Int<T>::value())
+			{
+				o->release(duration);
+			}
+			it++;
+		}
+	}
+
 	void clear()
 	{
 		vector<Instance*>::iterator it = instances.begin();
