@@ -1,8 +1,10 @@
 #pragma once
 
-#include "ofxAnimationPrimitivesConstants.h"
+#include "Constants.h"
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
+
+namespace Easing {
 
 struct Back
 {
@@ -237,5 +239,7 @@ struct Sine
 		return (t < 0.5) ? easeIn(t * 2.0) * 0.5 : 1 - easeIn(2.0 - t * 2.0) * 0.5;
 	}
 };
+
+}
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

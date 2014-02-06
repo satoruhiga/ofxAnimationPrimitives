@@ -1,4 +1,4 @@
-#include "ofxAnimationPrimitivesTimer.h"
+#include "Timer.h"
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 

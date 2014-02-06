@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxAnimationPrimitivesConstants.h"
+#include "Constants.h"
 
 #include "coroutine.hpp"
 // more info about boost::coroutine => http://www.boost.org/doc/libs/1_54_0/doc/html/boost_asio/reference/coroutine.html

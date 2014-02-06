@@ -2,9 +2,9 @@
 
 #include "ofMain.h"
 
-#include "ofxAnimationPrimitivesConstants.h"
+#include "Constants.h"
 
-#include "ofxAnimationPrimitivesTimer.h"
+#include "Timer.h"
 
 // based SuperCollider sequence mechanism
 // see. http://doc.sccode.org/Tutorials/Getting-Started/16-Sequencing-with-Patterns.html

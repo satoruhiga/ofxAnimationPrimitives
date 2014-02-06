@@ -1,6 +1,6 @@
 #include "testApp.h"
 
-#include "Generator.h"
+#include "ofxAnimationPrimitives.h"
 
 int sequence()
 {
