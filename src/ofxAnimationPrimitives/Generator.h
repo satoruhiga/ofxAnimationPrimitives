@@ -4,7 +4,7 @@
 
 #include "Constants.h"
 
-#include "coroutine.hpp"
+#include "detail/coroutine.hpp"
 // more info about boost::coroutine => http://www.boost.org/doc/libs/1_54_0/doc/html/boost_asio/reference/coroutine.html
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE

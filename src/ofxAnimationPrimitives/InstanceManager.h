@@ -1,5 +1,9 @@
 #pragma once
 
+#include "ofMain.h"
+
+#include "Constants.h"
+
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 class InstanceManager;

@@ -8,3 +8,4 @@
 #include "ofxAnimationPrimitives/Easing.h"
 #include "ofxAnimationPrimitives/InstanceManager.h"
 #include "ofxAnimationPrimitives/Lerp.h"
+#include "ofxAnimationPrimitives/Composition.h"

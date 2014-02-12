@@ -3,7 +3,6 @@
 #include "ofMain.h"
 
 #include "Constants.h"
-
 #include "Timer.h"
 
 // based SuperCollider sequence mechanism
