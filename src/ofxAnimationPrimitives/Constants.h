@@ -28,11 +28,14 @@ struct _$ : public vector<T>
 
 #pragma mark - misc
 
-template<typename T>
-struct Type2Int {
-	static unsigned int value() {
+namespace RTTI
+{
+	typedef void* TypeID;
+	
+	template <typename T>
+	static TypeID getTypeID() {
 		static size_t m = 0;
-		return (unsigned int)&m;
+		return &m;
 	}
 };
 

@@ -55,7 +55,7 @@ protected:
 
 private:
 	
-	unsigned int class_id;
+	RTTI::TypeID class_id;
 	
 	float remain;
 	float duration;
@@ -262,7 +262,7 @@ public:
 		while (it != instances.end())
 		{
 			Instance *o = *it;
-			if (o->class_id == Type2Int<T>::value())
+			if (o->class_id == RTTI::getTypeID<T>())
 			{
 				it = instances.erase(it);
 				o->willDelete();
@@ -280,7 +280,7 @@ public:
 		while (it != instances.end())
 		{
 			Instance *o = *it;
-			if (o->class_id == Type2Int<T>::value())
+			if (o->class_id == RTTI::getTypeID<T>())
 			{
 				o->release(duration);
 			}
@@ -308,7 +308,7 @@ protected:
 	template <typename T>
 	T* setupInstance(T* o)
 	{
-		o->class_id = Type2Int<T>::value();
+		o->class_id = RTTI::getTypeID<T>();
 		instances.push_back(o);
 		return o;
 	}
