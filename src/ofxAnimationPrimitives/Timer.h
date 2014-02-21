@@ -19,15 +19,17 @@ class Timer : protected Ticker
 {
 public:
 	
-	ofEvent<ofEventArgs> timerEvent;
+	ofEvent<int> timerEvent;
 	
-	Timer() : remain(0), duration(0), repeat(false) {}
+	Timer() : remain(0), duration(0), repeat(0) {}
 	
-	void start(float duration, bool repeat = true)
+	void start(float duration, int repeat = -1)
 	{
 		this->duration = duration;
 		this->remain = duration;
 		this->repeat = repeat;
+		
+		count = 0;
 		
 		Ticker::play();
 	}
@@ -37,10 +39,12 @@ public:
 		Ticker::stop();
 	}
 	
+	int getCount() const { return count; }
+	
 protected:
 	
 	float remain, duration;
-	bool repeat;
+	int repeat, count;
 	
 	void tick(float delta)
 	{
@@ -48,10 +52,13 @@ protected:
 		
 		if (remain > 0) return;
 		
-		static ofEventArgs args;
-		ofNotifyEvent(timerEvent, args, this);
+		int N = count;
+		ofNotifyEvent(timerEvent, N, this);
 		
-		if (repeat)
+		count++;
+		
+		if (repeat < 0
+			|| count < repeat)
 		{
 			remain += duration;
 		}

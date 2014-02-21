@@ -40,7 +40,7 @@ public:
 	
 	bool valid() const { return num > 0 || num == -1; }
 	
-//protected:
+protected:
 	
 	int num;
 	void tick() { if (num > 0) num--; }
