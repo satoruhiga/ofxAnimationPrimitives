@@ -39,6 +39,14 @@ namespace RTTI
 	}
 };
 
+template <typename T>
+struct Ref_ : public ofPtr<T>
+{
+	Ref_() : ofPtr<T>() {}
+	Ref_(T *t) : ofPtr<T>(t) {}
+	Ref_(const ofPtr<T>& o) : ofPtr<T>(o) {}
+};
+
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
 
 namespace ofxAnimationPrimitives = ofx::AnimationPrimitives;

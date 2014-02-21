@@ -48,7 +48,7 @@ void testApp::setup()
 	comp = ofxAnimationPrimitives::Composition::New<MainComposition>(5, 10, 1);
 	
 	// show SubTopComposition after MainComposition apper
-	comp->after(ofx::AnimationPrimitives::Composition::DID_APPEAR,
+	comp->after(ofxAnimationPrimitives::Composition::DID_APPEAR,
 				ofxAnimationPrimitives::Composition::New<SubTopComposition>(1, 3, 1));
 	
 	// show SubBottomComposition after 3 sec

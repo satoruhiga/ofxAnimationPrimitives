@@ -130,7 +130,7 @@ public:
 	
 	/*
 	http://nedbatchelder.com/code/cog/
-	$ cog.py -r InstanceManager.h
+	$ cog.py -r SomoSourceCode.h
 
 	[[[cog
 	import cog

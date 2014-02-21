@@ -15,13 +15,6 @@ public:
 	
 	typedef RefType<Composition> Ref;
 	
-	// factory method
-	template <typename T>
-	static Composition::Ref New(float fadein_duration = 0, float scene_total_duration = std::numeric_limits<float>::infinity(), float fadeout_duration = 0);
-	
-public:
-	
-	virtual void setup() {}
 	virtual void update() {}
 	virtual void draw() {}
 	
@@ -63,9 +56,101 @@ public:
 		DID_DISAPPEAR
 	};
 	
-	Composition& after(Cue event, const Composition::Ref&);
-	Composition& at(float time, const Composition::Ref&);
+	struct Duration {
+		float fadein_duration;
+		float total_duration;
+		float fadeout_duration;
+		
+		Duration(float fadein_duration = 0,
+				 float total_duration = std::numeric_limits<float>::infinity(),
+				 float fadeout_duration = 0);
+	};
 	
+	using Dur = Duration;
+	
+	Composition::Ref after(Cue event, Composition::Ref, Duration s = Duration());
+	Composition::Ref at(float time, Composition::Ref, Duration s = Duration());
+	
+public:
+
+	// factory method
+
+	template <typename T>
+	static Composition::Ref New();
+	
+	/*
+	http://nedbatchelder.com/code/cog/
+	$ cog.py -r SomoSourceCode.h
+
+	[[[cog
+	import cog
+	
+	tmpl = '''template <typename T, %(A)s>
+	static Composition::Ref New(%(B)s);
+	'''
+	
+	cog.outl('')
+	for i in xrange(1, 18):
+		a = ', '.join(['typename A%i' % x for x in range(i)])
+		b = ', '.join(['const A%i& a%i' % (x, x) for x in range(i)])
+		c = ', '.join(['a%i' % x for x in range(i)])
+		cog.outl(tmpl % {'A':a, 'B':b, 'C':c})
+	
+	]]]*/
+
+	template <typename T, typename A0>
+	static Composition::Ref New(const A0& a0);
+
+	template <typename T, typename A0, typename A1>
+	static Composition::Ref New(const A0& a0, const A1& a1);
+
+	template <typename T, typename A0, typename A1, typename A2>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11, typename A12>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11, typename A12, typename A13>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11, typename A12, typename A13, typename A14>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11, typename A12, typename A13, typename A14, typename A15>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15);
+
+	template <typename T, typename A0, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10, typename A11, typename A12, typename A13, typename A14, typename A15, typename A16>
+	static Composition::Ref New(const A0& a0, const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10, const A11& a11, const A12& a12, const A13& a13, const A14& a14, const A15& a15, const A16& a16);
+
+	//[[[end]]]
+		
 protected:
 	
 	Composition();
@@ -73,13 +158,10 @@ protected:
 
 private:
 	
-	float alpha;
-	int elapsed_frame;
+	float alpha, alpha_delta;
 	float elapsed_time;
 	
-	float duration;
-	float fadein_duration, fadeout_duration;
-	float fadeout_time;
+	Duration duration;
 	
 	multimap<Cue, Composition::Ref> cue_event_map;
 	multimap<float, Composition::Ref> time_event_map;
@@ -88,8 +170,8 @@ private:
 	void procCueEvent(Cue cue);
 	
 	enum CompositionState {
-		STARTED,
 		PAUSED,
+		STARTED,
 		FADEIN,
 		PLAYING,
 		FADEOUT,
@@ -98,9 +180,7 @@ private:
 
 	friend class CompositionRunner;
 	
-	void prepare(float fadein_duration, float scene_total_duration, float fadeout_duration);
 	void updateState();
-	void updateAlphaValue();
 	
 	void _update(float tick);
 	void _draw();
