@@ -206,9 +206,14 @@ void Composition::play()
 	}
 
 	if (duration.fadein_duration <= 0)
+	{
 		alpha_delta = 1.;
+		alpha = 1;
+	}
 	else
+	{
 		alpha_delta = 1. / duration.fadein_duration;
+	}
 	
 	state = STARTED;
 	
@@ -230,9 +235,14 @@ void Composition::stop(float fadeout_duration)
 	}
 
 	if (fadeout_duration <= 0)
-		alpha_delta = -alpha;
+	{
+		alpha_delta = -1;
+		alpha = 0;
+	}
 	else
+	{
 		alpha_delta = -alpha / fadeout_duration;
+	}
 }
 
 void Composition::_update(float tick)
@@ -366,7 +376,7 @@ Composition::Ref Composition::after(Cue event, Composition::Ref o, Duration s)
 	}
 	
 	cue_event_map.insert(make_pair(event, o));
-	duration = s;
+	o->duration = s;
 	
 	return o;
 }
@@ -379,7 +389,7 @@ Composition::Ref Composition::at(float time, Composition::Ref o, Duration s)
 	}
 	
 	time_event_map.insert(make_pair(time, o));
-	duration = s;
+	o->duration = s;
 	
 	return o;
 }
