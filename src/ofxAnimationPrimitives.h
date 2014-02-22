@@ -9,3 +9,4 @@
 #include "ofxAnimationPrimitives/InstanceManager.h"
 #include "ofxAnimationPrimitives/Lerp.h"
 #include "ofxAnimationPrimitives/Composition.h"
+#include "ofxAnimationPrimitives/Sequence.h"
