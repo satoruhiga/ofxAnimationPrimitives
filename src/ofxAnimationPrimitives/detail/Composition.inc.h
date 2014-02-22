@@ -209,6 +209,8 @@ void Composition::play()
 	{
 		alpha_delta = 1.;
 		alpha = 1;
+		
+		updateState();
 	}
 	else
 	{
@@ -238,6 +240,8 @@ void Composition::stop(float fadeout_duration)
 	{
 		alpha_delta = -1;
 		alpha = 0;
+		
+		updateState();
 	}
 	else
 	{
