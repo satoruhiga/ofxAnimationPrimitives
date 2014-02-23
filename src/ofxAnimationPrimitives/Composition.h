@@ -68,7 +68,7 @@ public:
 	
 	using Dur = Duration;
 	
-	Composition::Ref after(Cue event, Composition::Ref, Duration s = Duration());
+	Composition::Ref on(Cue event, Composition::Ref, Duration s = Duration());
 	Composition::Ref at(float time, Composition::Ref, Duration s = Duration());
 	
 public:

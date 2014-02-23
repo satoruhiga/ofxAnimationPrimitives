@@ -372,7 +372,7 @@ void Composition::procCueEvent(Cue cue)
 	}
 }
 
-Composition::Ref Composition::after(Cue event, Composition::Ref o, Duration s)
+Composition::Ref Composition::on(Cue event, Composition::Ref o, Duration s)
 {
 	if (o.get() == this)
 	{
