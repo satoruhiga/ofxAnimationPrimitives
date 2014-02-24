@@ -257,6 +257,16 @@ void Composition::_update(float tick)
 	elapsed_time += tick;
 	alpha += alpha_delta * tick;
 	
+	if (state == PLAYING
+		&& !isinf(duration.total_duration))
+	{
+		const float fadeout_time = duration.total_duration - duration.fadeout_duration;
+		if (elapsed_time > fadeout_time)
+		{
+			stop(duration.fadeout_duration);
+		}
+	}
+	
 	updateState();
 	
 	procTimeEvent(last_elapsed_time, elapsed_time);
