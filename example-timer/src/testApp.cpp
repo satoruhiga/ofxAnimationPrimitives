@@ -5,13 +5,13 @@
 ofxAnimationPrimitives::Timer oneshot;
 ofxAnimationPrimitives::Timer repeat;
 
-void testApp::onOneshotTimerEvent(ofEventArgs&)
+void testApp::onOneshotTimerEvent(int&)
 {
 	ofBackground(255, 0, 0);
 	cout << "oneshot: " << ofGetElapsedTimef() << endl;
 }
 
-void testApp::onRepeatTimerEvent(ofEventArgs&)
+void testApp::onRepeatTimerEvent(int&)
 {
 	ofBackground(255);
 	cout << "repeat: " << ofGetElapsedTimef() << endl;
@@ -27,8 +27,8 @@ void testApp::setup()
 	ofAddListener(oneshot.timerEvent, this, &testApp::onOneshotTimerEvent);
 	ofAddListener(repeat.timerEvent, this, &testApp::onRepeatTimerEvent);
 	
-	repeat.start(1, true);
-	oneshot.start(0.5, false);
+	repeat.start(1, ofxAnimationPrimitives::Timer::FOREVER);
+	oneshot.start(0.5, 1);
 }
 
 //--------------------------------------------------------------

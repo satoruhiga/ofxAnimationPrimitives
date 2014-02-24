@@ -19,11 +19,15 @@ class Timer : protected Ticker
 {
 public:
 	
+	enum {
+		FOREVER = -1
+	};
+	
 	ofEvent<int> timerEvent;
 	
 	Timer() : remain(0), duration(0), repeat(0) {}
 	
-	void start(float duration, int repeat = -1)
+	void start(float duration, int repeat = FOREVER)
 	{
 		this->duration = duration;
 		this->remain = duration;

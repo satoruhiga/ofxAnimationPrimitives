@@ -6,8 +6,8 @@ class testApp : public ofBaseApp
 {
 public:
 	
-	void onOneshotTimerEvent(ofEventArgs&);
-	void onRepeatTimerEvent(ofEventArgs&);
+	void onOneshotTimerEvent(int&);
+	void onRepeatTimerEvent(int&);
 	
 	void setup();
 	void update();

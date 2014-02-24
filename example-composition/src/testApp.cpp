@@ -2,17 +2,6 @@
 
 #include "ofxAnimationPrimitives.h"
 
-class MainComposition : public ofxAnimationPrimitives::Composition
-{
-public:
-	
-	void draw()
-	{
-		ofSetColor(255 * getAlpha());
-		ofRect(0, 0, ofGetWidth(), ofGetHeight());
-	}
-};
-
 class SubTopComposition : public ofxAnimationPrimitives::Composition
 {
 public:
@@ -35,6 +24,26 @@ public:
 	}
 };
 
+class MainComposition : public ofxAnimationPrimitives::Composition
+{
+public:
+	
+	MainComposition()
+	{
+		// show SubTopComposition after MainComposition apper
+		on(DID_APPEAR, New<SubTopComposition>(), Duration(1, 3, 1));
+		
+		// show SubBottomComposition after 3 sec
+		at(3, New<SubBottomComposition>(), Duration(1, 3, 1));
+	}
+	
+	void draw()
+	{
+		ofSetColor(255 * getAlpha());
+		ofRect(0, 0, ofGetWidth(), ofGetHeight());
+	}
+};
+
 MainComposition::Ref comp;
 
 //--------------------------------------------------------------
@@ -44,18 +53,11 @@ void testApp::setup()
 	ofSetFrameRate(60);
 	ofBackground(0);
 	
-	// create new composition, fadein in 5sec, total duration in 10 sec, fadeout in 3 sec.
-	comp = ofxAnimationPrimitives::Composition::New<MainComposition>(5, 10, 1);
-	
-	// show SubTopComposition after MainComposition apper
-	comp->after(ofxAnimationPrimitives::Composition::DID_APPEAR,
-				ofxAnimationPrimitives::Composition::New<SubTopComposition>(1, 3, 1));
-	
-	// show SubBottomComposition after 3 sec
-	comp->at(3, ofxAnimationPrimitives::Composition::New<SubBottomComposition>(1, 3, 1));
+	// create new composition
+	comp = ofxAnimationPrimitives::Composition::New<MainComposition>();
 
-	// start MainComposition
-	comp->play();
+	// start MainComposition, fadein in 5sec, total duration in 10 sec, fadeout in 3 sec.
+	comp->play(5, 10, 3);
 }
 
 //--------------------------------------------------------------

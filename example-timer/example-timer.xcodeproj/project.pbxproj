@@ -24,7 +24,7 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
-		E734178918A357CA00411AEA /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E734178618A357CA00411AEA /* Timer.cpp */; };
+		E71C647918BB2E9A00A92168 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71C647718BB2E9A00A92168 /* Timer.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
@@ -82,17 +82,20 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
-		E734177F18A357CA00411AEA /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		E734178018A357CA00411AEA /* coroutine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = coroutine.hpp; sourceTree = "<group>"; };
-		E734178118A357CA00411AEA /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
-		E734178218A357CA00411AEA /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
-		E734178318A357CA00411AEA /* InstanceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstanceManager.h; sourceTree = "<group>"; };
-		E734178418A357CA00411AEA /* Pattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pattern.h; sourceTree = "<group>"; };
-		E734178518A357CA00411AEA /* Replicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Replicator.h; sourceTree = "<group>"; };
-		E734178618A357CA00411AEA /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
-		E734178718A357CA00411AEA /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
+		E71C646B18BB2E9A00A92168 /* Composition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Composition.h; sourceTree = "<group>"; };
+		E71C646C18BB2E9A00A92168 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		E71C646E18BB2E9A00A92168 /* Composition.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Composition.inc.h; sourceTree = "<group>"; };
+		E71C646F18BB2E9A00A92168 /* coroutine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = coroutine.hpp; sourceTree = "<group>"; };
+		E71C647018BB2E9A00A92168 /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
+		E71C647118BB2E9A00A92168 /* Generator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generator.h; sourceTree = "<group>"; };
+		E71C647218BB2E9A00A92168 /* InstanceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstanceManager.h; sourceTree = "<group>"; };
+		E71C647318BB2E9A00A92168 /* Lerp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lerp.h; sourceTree = "<group>"; };
+		E71C647418BB2E9A00A92168 /* Pattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pattern.h; sourceTree = "<group>"; };
+		E71C647518BB2E9A00A92168 /* Replicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Replicator.h; sourceTree = "<group>"; };
+		E71C647618BB2E9A00A92168 /* Sequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sequence.h; sourceTree = "<group>"; };
+		E71C647718BB2E9A00A92168 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
+		E71C647818BB2E9A00A92168 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		E734178818A357CA00411AEA /* ofxAnimationPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAnimationPrimitives.h; sourceTree = "<group>"; };
-		E734179B18A36DE900411AEA /* Lerp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lerp.h; sourceTree = "<group>"; };
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
@@ -137,7 +140,7 @@
 		605ABC8717B65E9D0060099B /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E734177E18A357CA00411AEA /* ofxAnimationPrimitives */,
+				E71C646A18BB2E9A00A92168 /* ofxAnimationPrimitives */,
 				E734178818A357CA00411AEA /* ofxAnimationPrimitives.h */,
 			);
 			name = src;
@@ -231,21 +234,32 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
-		E734177E18A357CA00411AEA /* ofxAnimationPrimitives */ = {
+		E71C646A18BB2E9A00A92168 /* ofxAnimationPrimitives */ = {
 			isa = PBXGroup;
 			children = (
-				E734177F18A357CA00411AEA /* Constants.h */,
-				E734178018A357CA00411AEA /* coroutine.hpp */,
-				E734178118A357CA00411AEA /* Easing.h */,
-				E734178218A357CA00411AEA /* Generator.h */,
-				E734178318A357CA00411AEA /* InstanceManager.h */,
-				E734178418A357CA00411AEA /* Pattern.h */,
-				E734178518A357CA00411AEA /* Replicator.h */,
-				E734178618A357CA00411AEA /* Timer.cpp */,
-				E734178718A357CA00411AEA /* Timer.h */,
-				E734179B18A36DE900411AEA /* Lerp.h */,
+				E71C646B18BB2E9A00A92168 /* Composition.h */,
+				E71C646C18BB2E9A00A92168 /* Constants.h */,
+				E71C646D18BB2E9A00A92168 /* detail */,
+				E71C647018BB2E9A00A92168 /* Easing.h */,
+				E71C647118BB2E9A00A92168 /* Generator.h */,
+				E71C647218BB2E9A00A92168 /* InstanceManager.h */,
+				E71C647318BB2E9A00A92168 /* Lerp.h */,
+				E71C647418BB2E9A00A92168 /* Pattern.h */,
+				E71C647518BB2E9A00A92168 /* Replicator.h */,
+				E71C647618BB2E9A00A92168 /* Sequence.h */,
+				E71C647718BB2E9A00A92168 /* Timer.cpp */,
+				E71C647818BB2E9A00A92168 /* Timer.h */,
 			);
 			path = ofxAnimationPrimitives;
+			sourceTree = "<group>";
+		};
+		E71C646D18BB2E9A00A92168 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				E71C646E18BB2E9A00A92168 /* Composition.inc.h */,
+				E71C646F18BB2E9A00A92168 /* coroutine.hpp */,
+			);
+			path = detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,7 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E734178918A357CA00411AEA /* Timer.cpp in Sources */,
+				E71C647918BB2E9A00A92168 /* Timer.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 			);
