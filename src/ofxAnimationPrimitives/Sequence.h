@@ -79,7 +79,7 @@ public:
 		last_time = t;
 	}
 	
-	const vector<Clip::Ref>& getActiveClips() const { return active_clips; }
+	const vector<Clip::Ref>& getActiveClips() const { return active_clips_arr; }
 	const vector<Clip::Ref>& getAllClips() const { return clips; }
 	
 	void clear()
@@ -94,50 +94,93 @@ protected:
 	float last_time;
 	
 	vector<Clip::Ref> clips;
-	vector<Clip::Ref> active_clips;
+	set<Clip::Ref> active_clips;
+	vector<Clip::Ref> active_clips_arr;
 	
 	typedef multimap<float, Clip::Ref> ClipMap;
 	ClipMap clip_map;
 	
 	void updateInRange(float start, float end)
 	{
+		if (start > end)
+		{
+			// remove future clip if play backwards
+			
+			set<Clip::Ref>::iterator it = active_clips.begin();
+			while (it != active_clips.end())
+			{
+				Clip::Ref o = *it;
+				
+				if (o->getStartTime() >= end)
+				{
+					o->onEnd();
+					active_clips.erase(it);
+				}
+				
+				it++;
+			}
+			
+			return;
+		}
+
+		// Remove Pass 1: Find and remove out range clips
+		{
+			set<Clip::Ref>::iterator it = active_clips.begin();
+			while (it != active_clips.end())
+			{
+				Clip::Ref o = *it;
+				
+				if ((o->getStartTime() + o->getDuration()) <= end)
+				{
+					o->onEnd();
+					active_clips.erase(it);
+				}
+				
+				it++;
+			}
+		}
+
 		// Find new in range clips
 		{
-			float start_t = start;
-			float end_t = end;
-			if (start_t > end_t) swap(start_t, end_t);
-			
-			ClipMap::iterator it = clip_map.lower_bound(start_t);
-			ClipMap::iterator end_it = clip_map.lower_bound(end_t);
+			ClipMap::iterator it = clip_map.lower_bound(start);
+			ClipMap::iterator end_it = clip_map.lower_bound(end);
 			
 			while (it != end_it)
 			{
 				Clip::Ref o = it->second;
-				
-				active_clips.push_back(o);
 				o->onStart();
+				
+				if (o->getDuration() > 0)
+				{
+					active_clips.insert(o);
+				}
+				else
+				{
+					o->onEnd();
+				}
 				
 				it++;
 			}
 		}
 		
-		// Find and remove out range clips
+		// Remove Pass 2: Find and remove in new clips
 		{
-			vector<Clip::Ref>::iterator it = active_clips.begin();
+			set<Clip::Ref>::iterator it = active_clips.begin();
 			while (it != active_clips.end())
 			{
 				Clip::Ref o = *it;
 				
-				if (o->getDuration() <= 0
-					|| o->getStartTime() > end
-					|| (o->getStartTime() + o->getDuration()) < start)
+				if ((o->getStartTime() + o->getDuration()) <= end)
 				{
 					o->onEnd();
-					it = active_clips.erase(it);
+					active_clips.erase(it);
 				}
-				else it++;
+				
+				it++;
 			}
 		}
+		
+		active_clips_arr.assign(active_clips.begin(), active_clips.end());
 	}
 };
 
