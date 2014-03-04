@@ -114,10 +114,9 @@ protected:
 				if (o->getStartTime() >= end)
 				{
 					o->onEnd();
-					active_clips.erase(it);
+					active_clips.erase(it++);
 				}
-				
-				it++;
+				else it++;
 			}
 			
 			return;
@@ -133,10 +132,9 @@ protected:
 				if ((o->getStartTime() + o->getDuration()) <= end)
 				{
 					o->onEnd();
-					active_clips.erase(it);
+					active_clips.erase(it++);
 				}
-				
-				it++;
+				else it++;
 			}
 		}
 
@@ -173,10 +171,9 @@ protected:
 				if ((o->getStartTime() + o->getDuration()) <= end)
 				{
 					o->onEnd();
-					active_clips.erase(it);
+					active_clips.erase(it++);
 				}
-				
-				it++;
+				else it++;
 			}
 		}
 		
