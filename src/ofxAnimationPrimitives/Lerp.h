@@ -25,7 +25,7 @@ public:
 	inline Lerp<T>& operator=(const T& v) { target = v; }
 	inline operator const T&() const { return value; }
 	
-	inline void setValue(const T& v) { target = v; }
+	inline void setValue(const T& v, bool override = false) { override ? value = v; : target = v; }
 	inline const T& getValue() const { return value; }
 	
 	inline void setSpeed(float v) { speed = ofClamp(v, 0, 1); }
