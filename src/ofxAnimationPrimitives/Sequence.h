@@ -4,7 +4,8 @@
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
-class Sequence
+template <typename timestamp_t>
+class Sequence_
 {
 public:
 	
@@ -17,8 +18,8 @@ public:
 		Clip() {}
 		virtual ~Clip() {}
 		
-		virtual float getStartTime() const { return 0; }
-		virtual float getDuration() const { return 0; }
+		virtual timestamp_t getStartTime() const { return 0; }
+		virtual timestamp_t getDuration() const { return 0; }
 		
 		virtual void update() {}
 		virtual void draw() {}
@@ -31,15 +32,15 @@ public:
 
 public:
 	
-	Sequence() : last_time(0) {}
-	~Sequence() { clear(); }
+	Sequence_() : last_time(0) {}
+	~Sequence_() { clear(); }
 	
-	inline bool hasClip(Clip::Ref o)
+	inline bool hasClip(typename Clip::Ref o)
 	{
 		return find(clips.begin(), clips.end(), o) != clips.end();
 	}
 	
-	void addClip(Clip::Ref o)
+	void addClip(typename Clip::Ref o)
 	{
 		if (hasClip(o)) return;
 		clips.push_back(o);
@@ -47,7 +48,7 @@ public:
 		clip_map.insert(make_pair(o->getStartTime(), o));
 	}
 	
-	void removeClip(Clip::Ref o)
+	void removeClip(typename Clip::Ref o)
 	{
 		if (!hasClip(o)) return;
 		clips.erase(remove(clips.begin(), clips.end(), o), clips.end());
@@ -56,7 +57,7 @@ public:
 		int n = clip_map.count(o->getStartTime());
 		if (n == 0) return;
 		
-		ClipMap::iterator it = clip_map.find(o->getStartTime());
+		typename ClipMap::iterator it = clip_map.find(o->getStartTime());
 		for (int i = 0; i < n; i++)
 		{
 			if (it->second == o)
@@ -68,10 +69,10 @@ public:
 		}
 	}
 	
-	void setTime(float t)
+	void setTime(timestamp_t t)
 	{
-		float begin = last_time;
-		float end = t;
+		timestamp_t begin = last_time;
+		timestamp_t end = t;
 		
 		if (begin != end)
 			updateInRange(begin, end);
@@ -79,8 +80,8 @@ public:
 		last_time = t;
 	}
 	
-	const vector<Clip::Ref>& getActiveClips() const { return active_clips_arr; }
-	const vector<Clip::Ref>& getAllClips() const { return clips; }
+	const vector<typename Clip::Ref>& getActiveClips() const { return active_clips_arr; }
+	const vector<typename Clip::Ref>& getAllClips() const { return clips; }
 	
 	void clear()
 	{
@@ -91,25 +92,25 @@ public:
 	
 protected:
 	
-	float last_time;
+	timestamp_t last_time;
 	
-	vector<Clip::Ref> clips;
-	set<Clip::Ref> active_clips;
-	vector<Clip::Ref> active_clips_arr;
+	vector<typename Clip::Ref> clips;
+	set<typename Clip::Ref> active_clips;
+	vector<typename Clip::Ref> active_clips_arr;
 	
-	typedef multimap<float, Clip::Ref> ClipMap;
+	typedef multimap<timestamp_t, typename Clip::Ref> ClipMap;
 	ClipMap clip_map;
 	
-	void updateInRange(float start, float end)
+	void updateInRange(timestamp_t start, timestamp_t end)
 	{
 		if (start > end)
 		{
 			// remove future clip if play backwards
 			
-			set<Clip::Ref>::iterator it = active_clips.begin();
+			typename set<typename Clip::Ref>::iterator it = active_clips.begin();
 			while (it != active_clips.end())
 			{
-				Clip::Ref o = *it;
+				typename Clip::Ref o = *it;
 				
 				if (o->getStartTime() >= end)
 				{
@@ -124,10 +125,10 @@ protected:
 
 		// Remove Pass 1: Find and remove out range clips
 		{
-			set<Clip::Ref>::iterator it = active_clips.begin();
+			typename set<typename Clip::Ref>::iterator it = active_clips.begin();
 			while (it != active_clips.end())
 			{
-				Clip::Ref o = *it;
+				typename Clip::Ref o = *it;
 				
 				if ((o->getStartTime() + o->getDuration()) <= end)
 				{
@@ -140,12 +141,12 @@ protected:
 
 		// Find new in range clips
 		{
-			ClipMap::iterator it = clip_map.lower_bound(start);
-			ClipMap::iterator end_it = clip_map.lower_bound(end);
+			typename ClipMap::iterator it = clip_map.lower_bound(start);
+			typename ClipMap::iterator end_it = clip_map.lower_bound(end);
 			
 			while (it != end_it)
 			{
-				Clip::Ref o = it->second;
+				typename Clip::Ref o = it->second;
 				o->onStart();
 				
 				if (o->getDuration() > 0)
@@ -163,10 +164,10 @@ protected:
 		
 		// Remove Pass 2: Find and remove in new clips
 		{
-			set<Clip::Ref>::iterator it = active_clips.begin();
+			typename set<typename Clip::Ref>::iterator it = active_clips.begin();
 			while (it != active_clips.end())
 			{
-				Clip::Ref o = *it;
+				typename Clip::Ref o = *it;
 				
 				if ((o->getStartTime() + o->getDuration()) <= end)
 				{
@@ -180,5 +181,7 @@ protected:
 		active_clips_arr.assign(active_clips.begin(), active_clips.end());
 	}
 };
+
+typedef Sequence_<float> Sequence;
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
