@@ -1,8 +1,9 @@
 #pragma once
 
+#include "ofMain.h"
+
 #define OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE namespace ofx { namespace AnimationPrimitives {
 #define OFX_ANIMATION_PRIMITIVES_END_NAMESPACE } }
-
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
