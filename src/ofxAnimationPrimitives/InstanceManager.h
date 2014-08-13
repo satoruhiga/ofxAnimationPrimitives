@@ -301,6 +301,25 @@ public:
 		instances.clear();
 	}
 	
+	template <typename T>
+	vector<T*> getInstance()
+	{
+		vector<T*> result;
+		
+		vector<Instance*>::iterator it = instances.begin();
+		while (it != instances.end())
+		{
+			Instance *o = *it;
+			if (o->class_id == RTTI::getTypeID<T>())
+			{
+				result.push_back((T*)o);
+			}
+			it++;
+		}
+		
+		return result;
+	}
+	
 protected:
 	
 	vector<Instance*> instances;
