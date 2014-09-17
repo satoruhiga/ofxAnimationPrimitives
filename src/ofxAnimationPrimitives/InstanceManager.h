@@ -14,16 +14,17 @@ class Instance
 	
 public:
 	
-	Instance() : class_id(0), remain(0), duration(0), life(0), one_minus_life(0) {}
+	Instance() : class_id(0), remain(0), duration(0), life(0), one_minus_life(0), after(0) {}
 	virtual ~Instance() {}
 	
 	virtual void update() {}
 	virtual void draw() {}
 	
-	inline void play(float duration)
+	inline void play(float duration, float after = 0)
 	{
 		if (duration < 0) duration = 0;
 		this->duration = remain = duration;
+		this->after = after;
 	}
 
 	inline void playInfinity()
@@ -59,6 +60,7 @@ private:
 	
 	float remain;
 	float duration;
+	float after;
 	
 	// cache
 	float life;
@@ -75,6 +77,14 @@ public:
 		for (int i = 0; i < instances.size(); i++)
 		{
 			Instance *o = instances[i];
+			
+			if (o->after >= tick)
+			{
+				o->after -= tick;
+				continue;
+			}
+			else o->after = 0;
+			
 			o->update();
 			o->remain -= tick;
 			
@@ -111,7 +121,8 @@ public:
 		while (it != instances.end())
 		{
 			Instance *o = *it;
-			o->draw();
+			if (o->after == 0)
+				o->draw();
 			it++;
 		}
 		
