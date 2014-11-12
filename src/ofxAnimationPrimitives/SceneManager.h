@@ -20,6 +20,11 @@ public:
 	
 	float getAlpha() const { return _alpha; }
 	
+	virtual void viewWillAppear() {}
+	virtual void viewDidAppear() {}
+	virtual void viewWillDisappear() {}
+	virtual void viewDidDisappear() {}
+
 private:
 	
 	float _alpha;
@@ -33,14 +38,14 @@ public:
 	: default_fade_duration(1)
 	{}
 	
-	void update()
+	void update(float tick = ofGetLastFrameTime())
 	{
 		{
 			map<Scene*, Fader>::iterator it = faders.begin();
 			while (it != faders.end())
 			{
 				Fader& fader = it->second;
-				fader.update();
+				fader.update(tick);
 				it++;
 			}
 		}
@@ -201,6 +206,17 @@ protected:
 				scene->_alpha = target;
 				
 				time = std::numeric_limits<float>::infinity();
+				
+				if (target == 1)
+				{
+					scene->viewWillAppear();
+					scene->viewDidAppear();
+				}
+				else
+				{
+					scene->viewWillDisappear();
+					scene->viewDidDisappear();
+				}
 			}
 			else
 			{
@@ -209,16 +225,37 @@ protected:
 				this->start_alpha = scene->_alpha;
 				
 				time = 0;
+				
+				if (target == 1)
+				{
+					scene->viewWillAppear();
+				}
+				else
+				{
+					scene->viewWillDisappear();
+				}				
 			}
 		}
 		
-		void update()
+		void update(float tick)
 		{
 			if (isActive() == false) return;
 			
-			time += ofGetLastFrameTime();
+			time += tick;
 			
 			float d = ofMap(time, 0, duration, start_alpha, target_alpha, true);
+			
+			if (d == target_alpha)
+			{
+				if (target_alpha == 1)
+				{
+					scene->viewDidAppear();
+				}
+				else
+				{
+					scene->viewDidDisappear();
+				}
+			}
 			
 			scene->_alpha = d;
 		}

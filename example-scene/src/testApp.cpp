@@ -28,6 +28,11 @@ public:
 		ofSetColor(255);
 		ofDrawBitmapString("SCENE0 alpha:" + ofToString(getAlpha(), 3), 10, 20);
 	}
+	
+	void viewWillAppear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewDidAppear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewWillDisappear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewDidDisappear() { cout << __PRETTY_FUNCTION__ << endl; }
 };
 
 class Scene1 : public ofxAnimationPrimitives::Scene
@@ -54,6 +59,11 @@ public:
 		ofSetColor(255);
 		ofDrawBitmapString("SCENE1 alpha:" + ofToString(getAlpha(), 3), ofGetWidth() / 2 + 10, 20);
 	}
+	
+	void viewWillAppear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewDidAppear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewWillDisappear() { cout << __PRETTY_FUNCTION__ << endl; }
+	void viewDidDisappear() { cout << __PRETTY_FUNCTION__ << endl; }
 };
 
 //--------------------------------------------------------------
