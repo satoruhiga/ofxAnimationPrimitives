@@ -1,20 +1,28 @@
 
+inline Composition::Duration::Duration(float total_duration)
+	: fadein_duration(0)
+	, total_duration(total_duration)
+	, fadeout_duration(0)
+{
+	
+}
+
 inline Composition::Duration::Duration(float fadein_duration, float total_duration, float fadeout_duration)
-	:fadein_duration(fadein_duration)
-	,total_duration(total_duration)
-	,fadeout_duration(fadeout_duration)
+	: fadein_duration(fadein_duration)
+	, total_duration(total_duration)
+	, fadeout_duration(fadeout_duration)
 {
 }
 
 
 #pragma mark - Composition
 
-inline Composition::Composition() :
-	state(PAUSED),
-	alpha(0),
-	alpha_delta(0),
-	elapsed_time(0),
-	duration(0, 0, 0)
+inline Composition::Composition()
+	: state(PAUSED)
+	, alpha(0)
+	, alpha_delta(0)
+	, elapsed_time(0)
+	, duration(0, 0, 0)
 {
 }
 
@@ -177,13 +185,15 @@ inline void Composition::reset()
 	alpha_delta = 0;
 	
 	{
-		multimap<Cue, Composition::Ref>::iterator it = cue_event_map.begin();
-		while (it != cue_event_map.end())
+		multimap<Trigger, Composition::Ref>::iterator it = trigger_event_map.begin();
+		while (it != trigger_event_map.end())
 		{
 			Composition::Ref &o = it->second;
 			o->reset();
 			it++;
 		}
+		
+		trigger_event_map.clear();
 	}
 	
 	{
@@ -194,6 +204,8 @@ inline void Composition::reset()
 			o->reset();
 			it++;
 		}
+		
+		time_event_map.clear();
 	}
 }
 
@@ -204,7 +216,7 @@ inline void Composition::play()
 		ofLogWarning("Composition") << "play method called multiple times.";
 		return;
 	}
-
+	
 	if (duration.fadein_duration <= 0)
 	{
 		alpha_delta = 1.;
@@ -220,6 +232,11 @@ inline void Composition::play()
 	state = STARTED;
 	
 	CompositionRunner::defaultRunner().registerComposition(this);
+}
+
+inline void Composition::play(float scene_total_duration)
+{
+	Composition::play(0, scene_total_duration, 0);
 }
 
 inline void Composition::play(float fadein_duration, float scene_total_duration, float fadeout_duration)
@@ -292,28 +309,28 @@ inline void Composition::_viewWillAppear()
 {
 	viewWillAppear();
 	
-	procCueEvent(WILL_APPEAR);
+	procTriggerEvent(WILL_APPEAR);
 }
 
 inline void Composition::_viewDidAppear()
 {
 	viewDidAppear();
 	
-	procCueEvent(DID_APPEAR);
+	procTriggerEvent(DID_APPEAR);
 }
 
 inline void Composition::_viewWillDisappear()
 {
 	viewWillDisappear();
 	
-	procCueEvent(WILL_DISAPPEAR);
+	procTriggerEvent(WILL_DISAPPEAR);
 }
 
 inline void Composition::_viewDidDisappear()
 {
 	viewDidDisappear();
 	
-	procCueEvent(DID_DISAPPEAR);
+	procTriggerEvent(DID_DISAPPEAR);
 	CompositionRunner::defaultRunner().unregisterComposition(this);
 }
 
@@ -366,30 +383,32 @@ inline void Composition::procTimeEvent(float t0, float t1)
 	}
 }
 
-inline void Composition::procCueEvent(Cue cue)
+inline void Composition::procTriggerEvent(Trigger trigger)
 {
-	if (cue_event_map.count(cue))
+	if (trigger_event_map.count(trigger))
 	{
-		std::pair<multimap<Cue, Composition::Ref>::iterator,
-		multimap<Cue, Composition::Ref>::iterator> range = cue_event_map.equal_range(cue);
-		multimap<Cue, Composition::Ref>::iterator it = range.first;
+		std::pair<multimap<Trigger, Composition::Ref>::iterator,
+		multimap<Trigger, Composition::Ref>::iterator> range = trigger_event_map.equal_range(trigger);
+		multimap<Trigger, Composition::Ref>::iterator it = range.first;
 		while (it != range.second)
 		{
 			Composition::Ref &o = it->second;
 			o->play();
 			it++;
 		}
+		
+		ofNotifyEvent(onTrigger, trigger, this);
 	}
 }
 
-inline Composition::Ref Composition::on(Cue event, Composition::Ref o, Duration s)
+inline Composition::Ref Composition::on(Trigger event, Composition::Ref o, Duration s)
 {
 	if (o.get() == this)
 	{
 		throw;
 	}
 	
-	cue_event_map.insert(make_pair(event, o));
+	trigger_event_map.insert(make_pair(event, o));
 	o->duration = s;
 	
 	return o;

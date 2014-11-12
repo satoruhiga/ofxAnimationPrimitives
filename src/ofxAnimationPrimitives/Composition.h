@@ -22,7 +22,7 @@ public:
 	virtual void viewDidAppear() {}
 	virtual void viewWillDisappear() {}
 	virtual void viewDidDisappear() {}
-
+    
 public:
 	
 	// property
@@ -37,7 +37,8 @@ public:
 public:
 	
 	void play();
-	void play(float fadein_duration, float scene_total_duration = std::numeric_limits<float>::infinity(), float fadeout_duration = 0);
+	void play(float scene_total_duration);
+	void play(float fadein_duration, float scene_total_duration, float fadeout_duration);
 	void stop(float fadeout_duration = 0);
 	
 	bool isPlaying() const;
@@ -49,26 +50,25 @@ public:
 	
 	// events
 	
-	enum Cue {
+	enum Trigger {
 		WILL_APPEAR,
 		DID_APPEAR,
 		WILL_DISAPPEAR,
 		DID_DISAPPEAR
 	};
 	
+	ofEvent<Trigger> onTrigger;
+	
 	struct Duration {
 		float fadein_duration;
 		float total_duration;
 		float fadeout_duration;
 		
-		Duration(float fadein_duration = 0,
-				 float total_duration = std::numeric_limits<float>::infinity(),
-				 float fadeout_duration = 0);
+		Duration(float total_duration = std::numeric_limits<float>::infinity());
+		Duration(float fadein_duration, float total_duration, float fadeout_duration);
 	};
 	
-	using Dur = Duration;
-	
-	Composition::Ref on(Cue event, Composition::Ref, Duration s = Duration());
+	Composition::Ref on(Trigger event, Composition::Ref, Duration s = Duration());
 	Composition::Ref at(float time, Composition::Ref, Duration s = Duration());
 	
 public:
@@ -163,11 +163,11 @@ private:
 	
 	Duration duration;
 	
-	multimap<Cue, Composition::Ref> cue_event_map;
+	multimap<Trigger, Composition::Ref> trigger_event_map;
 	multimap<float, Composition::Ref> time_event_map;
 	
 	void procTimeEvent(float t0, float t1);
-	void procCueEvent(Cue cue);
+	void procTriggerEvent(Trigger trigger);
 	
 	enum CompositionState {
 		PAUSED,
