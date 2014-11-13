@@ -6,16 +6,27 @@
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
-class InstanceManager;
+template <typename UniformData>
+class InstanceManager_;
 
-class Instance
+template <typename UniformData>
+class Instance_
 {
-	friend class InstanceManager;
+	friend class InstanceManager_<UniformData>;
 	
 public:
 	
-	Instance() : class_id(0), remain(0), duration(0), life(0), one_minus_life(0), after(0) {}
-	virtual ~Instance() {}
+	Instance_()
+		: class_id(0)
+		, remain(0)
+		, duration(0)
+		, life(0)
+		, one_minus_life(0)
+		, after(0)
+		, uniform(NULL)
+	{}
+	
+	virtual ~Instance_() {}
 	
 	virtual void update() {}
 	virtual void draw() {}
@@ -50,6 +61,9 @@ public:
 	
 	inline bool isInfinity() const { return std::isinf(duration); }
 	
+	inline UniformData& getUniform() { return *uniform; }
+	inline const UniformData& getUniform() const { return *uniform; }
+	
 protected:
 	
 	virtual void willDelete() {}
@@ -65,11 +79,15 @@ private:
 	// cache
 	float life;
 	float one_minus_life;
-
+	
+	UniformData *uniform;
 };
 
-class InstanceManager
+template <typename UniformData>
+class InstanceManager_
 {
+	typedef Instance_<UniformData> Instance;
+	
 public:
 	
 	void update(float tick = ofGetLastFrameTime())
@@ -96,7 +114,7 @@ public:
 			o->one_minus_life = 1 - o->life;
 		}
 		
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -117,7 +135,7 @@ public:
 		ofPushMatrix();
 		ofPushStyle();
 		
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -266,10 +284,33 @@ public:
 
 	//[[[end]]]
 
+	void release()
+	{
+		typename vector<Instance*>::iterator it = instances.begin();
+		while (it != instances.end())
+		{
+			Instance *o = *it;
+			o->willDelete();
+			delete o;
+			it++;
+		}
+	}
+	
+	void release(float duration)
+	{
+		typename vector<Instance*>::iterator it = instances.begin();
+		while (it != instances.end())
+		{
+			Instance *o = *it;
+			o->release(duration);
+			it++;
+		}
+	}
+
 	template <typename T>
 	void release()
 	{
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -287,7 +328,7 @@ public:
 	template <typename T>
 	void release(float duration)
 	{
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -301,7 +342,7 @@ public:
 
 	void clear()
 	{
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -317,7 +358,7 @@ public:
 	{
 		vector<T*> result;
 		
-		vector<Instance*>::iterator it = instances.begin();
+		typename vector<Instance*>::iterator it = instances.begin();
 		while (it != instances.end())
 		{
 			Instance *o = *it;
@@ -331,17 +372,27 @@ public:
 		return result;
 	}
 	
+	UniformData& getUniform() { return uniform; }
+	const UniformData& getUniform() const { return uniform; }
+	
 protected:
 	
+	UniformData uniform;
 	vector<Instance*> instances;
 	
 	template <typename T>
 	T* setupInstance(T* o)
 	{
 		o->class_id = RTTI::getTypeID<T>();
+		o->uniform = &uniform;
 		instances.push_back(o);
 		return o;
 	}
 };
+
+struct EmptyData {};
+
+typedef Instance_<EmptyData> Instance;
+typedef InstanceManager_<EmptyData> InstanceManager;
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
