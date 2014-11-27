@@ -8,12 +8,9 @@ OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
 class Composition
 {
-	template <typename T>
-	using RefType = ofPtr<T>;
-	
 public:
 	
-	typedef RefType<Composition> Ref;
+	typedef ofPtr<Composition> Ref;
 	
 	virtual void update() {}
 	virtual void draw() {}
