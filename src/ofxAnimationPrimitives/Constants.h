@@ -51,3 +51,8 @@ struct Ref_ : public ofPtr<T>
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
 
 namespace ofxAnimationPrimitives = ofx::AnimationPrimitives;
+
+#ifdef _WIN32
+#define isnormal(x) (_fpclass(x) == _FPCLASS_NN || _fpclass(x) == _FPCLASS_PN)
+#define isinf(x) (!_finite(x))
+#endif
