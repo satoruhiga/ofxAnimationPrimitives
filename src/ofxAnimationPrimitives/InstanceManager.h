@@ -371,6 +371,8 @@ public:
 		
 		return result;
 	}
+
+	size_t getNumInstances() const { return instances.size(); }
 	
 	UniformData& getUniform() { return uniform; }
 	const UniformData& getUniform() const { return uniform; }
