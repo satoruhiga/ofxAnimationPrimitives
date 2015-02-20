@@ -12,8 +12,10 @@ class Scene
 public:
 	
 	Scene()
-	: _alpha(0)
+		: _alpha(0)
 	{}
+	
+	virtual ~Scene() {}
 	
 	virtual void update() {}
 	virtual void draw() {}
@@ -187,15 +189,40 @@ protected:
 	{
 	public:
 		
-		Fader() {}
+		Fader()
+			: scene(NULL)
+			, time(0)
+			, duration(0)
+			, start_alpha(0)
+			, target_alpha(0)
+		{}
 		
 		Fader(Scene* scene)
-		: scene(scene)
+			: scene(scene)
+			, time(0)
+			, duration(0)
+			, start_alpha(0)
+			, target_alpha(0)
 		{}
+		
+		Fader(const Fader& copy) { *this = copy; }
+		
+		Fader& operator=(const Fader& copy)
+		{
+			scene = copy.scene;
+			time = copy.time;
+			duration = copy.duration;
+			start_alpha = copy.start_alpha;
+			target_alpha = copy.target_alpha;
+		}
 		
 		void fade(float target, float duration)
 		{
-			if (target == scene->_alpha) return;
+			if (fabs(target - scene->_alpha) < std::numeric_limits<float>::epsilon())
+			{
+				scene->_alpha = target;
+				return;
+			}
 			
 			if (duration <= 0)
 			{
