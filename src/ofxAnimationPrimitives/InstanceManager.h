@@ -23,6 +23,7 @@ public:
 		, life(0)
 		, one_minus_life(0)
 		, after(0)
+		, elapsed(0)
 		, uniform(NULL)
 	{}
 	
@@ -64,6 +65,8 @@ public:
 	inline UniformData& getUniform() { return *uniform; }
 	inline const UniformData& getUniform() const { return *uniform; }
 	
+	inline float getElapsed() const { return elapsed; }
+	
 protected:
 	
 	virtual void willDelete() {}
@@ -75,6 +78,7 @@ private:
 	float remain;
 	float duration;
 	float after;
+	float elapsed;
 	
 	// cache
 	float life;
@@ -105,6 +109,7 @@ public:
 			
 			o->update();
 			o->remain -= tick;
+			o->elapsed += tick;
 			
 			if (isnormal(o->duration))
 				o->life = o->remain / o->duration;
@@ -371,7 +376,9 @@ public:
 		
 		return result;
 	}
-
+	
+	const vector<Instance*>& getInstance() const { return instances; }
+	
 	size_t getNumInstances() const { return instances.size(); }
 	
 	UniformData& getUniform() { return uniform; }
