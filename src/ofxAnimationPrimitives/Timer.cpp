@@ -8,7 +8,7 @@ struct DefaultClock
 {
 	Clock clock;
 	
-	DefaultClock()
+	void setup()
 	{
 		clock.makeSystemClock();
 		ofAddListener(ofEvents().update, this, &DefaultClock::onUpdate);
@@ -30,6 +30,11 @@ void Ticker::play()
 void Ticker::stop()
 {
 	Clock::unregist(this);
+}
+
+void initTimer()
+{
+	default_clock.setup();
 }
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE

@@ -6,6 +6,8 @@
 
 OFX_ANIMATION_PRIMITIVES_BEGIN_NAMESPACE
 
+void initTimer();
+
 struct Ticker
 {
 	virtual ~Ticker() { stop(); }
