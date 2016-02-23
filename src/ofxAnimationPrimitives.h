@@ -11,3 +11,4 @@
 #include "ofxAnimationPrimitives/Composition.h"
 #include "ofxAnimationPrimitives/Sequence.h"
 #include "ofxAnimationPrimitives/SceneManager.h"
+#include "ofxAnimationPrimitives/CommandQueue.h"
