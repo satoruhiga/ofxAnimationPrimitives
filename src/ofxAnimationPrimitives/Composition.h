@@ -189,7 +189,7 @@ private:
 	
 	// noncopyable
 	Composition(const Composition&) {}
-	Composition& operator=(const Composition&) {}
+    Composition& operator=(const Composition&) { return *this; }
 };
 
 
@@ -246,7 +246,7 @@ private:
 	CompositionRunner() {}
 	~CompositionRunner() {}
 	CompositionRunner(const CompositionRunner&) {}
-	CompositionRunner& operator=(const CompositionRunner&) {}
+    CompositionRunner& operator=(const CompositionRunner&) { return *this; }
 };
 
 #include "detail/Composition.inc.h"

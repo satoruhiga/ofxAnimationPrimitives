@@ -173,15 +173,15 @@ public:
 	bool changeScene(float fade_duration);
 	
 	size_t getNumScenes() const { return scenes.size(); }
-	const vector<string>& getSceneNames() const { return scene_names; }
+    const std::vector<string>& getSceneNames() const { return scene_names; }
 	
-	float setDefaultFadeDuration(float v) { default_fade_duration = v; }
+    float setDefaultFadeDuration(float v) { default_fade_duration = v; return false;}
 	float getDefaultFadeDuration() const { return default_fade_duration; }
 	
 protected:
 	
 	map<string, Scene*> scenes;
-	vector<string> scene_names;
+    std::vector<string> scene_names;
 	
 	float default_fade_duration;
 	
@@ -214,6 +214,7 @@ protected:
 			duration = copy.duration;
 			start_alpha = copy.start_alpha;
 			target_alpha = copy.target_alpha;
+            return *this;
 		}
 		
 		void fade(float target, float duration)
@@ -513,18 +514,21 @@ inline bool SceneManager::changeScene(const string& scene_name, float fade_durat
 inline bool SceneManager::changeScene(const string& scene_name)
 {
 	changeScene(scene_name, default_fade_duration);
+    return false;
 }
 
 template<typename T>
 inline bool SceneManager::changeScene(float fade_duration)
 {
 	changeScene(T::getSceneName(), fade_duration);
+    return false;
 }
 
 template<typename T>
 inline bool SceneManager::changeScene()
 {
 	changeScene<T>(default_fade_duration);
+    return false;
 }
 
 OFX_ANIMATION_PRIMITIVES_END_NAMESPACE
