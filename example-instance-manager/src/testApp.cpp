@@ -33,9 +33,9 @@ public:
 	
 	void draw()
 	{
-		ofFill();
-		ofSetColor(color);
-		ofCircle(pos, (30 + sin(phase * PI) * 10) * getLife());
+        ofFill();
+        ofSetColor(color);
+        ofDrawCircle(pos, (30 + sin(phase * PI) * 10) * getLife());
 	}
 };
 
@@ -71,9 +71,9 @@ public:
 	
 	void draw()
 	{
-		ofNoFill();
-		ofSetColor(color);
-		ofCircle(pos, (100 + sin(phase * PI) * 30) * getLife());
+        ofNoFill();
+        ofSetColor(color);
+        ofDrawCircle(pos, (100 + sin(phase * PI) * 30) * getLife());
 	}
 };
 
