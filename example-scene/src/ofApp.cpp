@@ -1,4 +1,4 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 #include "ofxAnimationPrimitives.h"
 
@@ -23,7 +23,7 @@ public:
 	void draw()
 	{
 		ofSetColor(100, 0, 0, 255 * getAlpha());
-		ofRect(0, 0, ofGetWidth() / 2, ofGetHeight());
+		ofDrawRectangle(0, 0, ofGetWidth() / 2, ofGetHeight());
 		
 		ofSetColor(255);
 		ofDrawBitmapString("SCENE0 alpha:" + ofToString(getAlpha(), 3), 10, 20);
@@ -54,7 +54,7 @@ public:
 	void draw()
 	{
 		ofSetColor(0, 100, 0, 255 * getAlpha());
-		ofRect(ofGetWidth() / 2, 0, ofGetWidth() / 2, ofGetHeight());
+		ofDrawRectangle(ofGetWidth() / 2, 0, ofGetWidth() / 2, ofGetHeight());
 		
 		ofSetColor(255);
 		ofDrawBitmapString("SCENE1 alpha:" + ofToString(getAlpha(), 3), ofGetWidth() / 2 + 10, 20);
@@ -67,7 +67,7 @@ public:
 };
 
 //--------------------------------------------------------------
-void testApp::setup()
+void ofApp::setup()
 {
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
@@ -80,7 +80,7 @@ void testApp::setup()
 }
 
 //--------------------------------------------------------------
-void testApp::update()
+void ofApp::update()
 {
 	ofBackground(0);
 	
@@ -88,60 +88,60 @@ void testApp::update()
 }
 
 //--------------------------------------------------------------
-void testApp::draw()
+void ofApp::draw()
 {
 	SM.draw();
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key)
+void ofApp::keyPressed(int key)
 {
 	if (key == '1') SM.changeScene<Scene0>(0.1);
 	if (key == '2') SM.changeScene<Scene1>();
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key)
+void ofApp::keyReleased(int key)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y)
+void ofApp::mouseMoved(int x, int y)
 {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button)
-{
-
-}
-
-//--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button)
-{
-}
-
-//--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button)
+void ofApp::mouseDragged(int x, int y, int button)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h)
+void ofApp::mousePressed(int x, int y, int button)
+{
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg)
+void ofApp::windowResized(int w, int h)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo)
+void ofApp::gotMessage(ofMessage msg)
+{
+
+}
+
+//--------------------------------------------------------------
+void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
 }

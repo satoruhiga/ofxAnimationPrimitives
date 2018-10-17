@@ -2,4 +2,6 @@
 build-*
 example-*/bin/example*
 example-*/*qbs.user
+*/*.plist
+*.pbxproj
 
